@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-10 14:42:06
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-10 16:01:05
+ * @LastEditTime: 2021-09-10 17:30:43
  * @Description: 我添加了修改
  */
 const methods = ['pop', 'shift', 'push', 'splice', 'unshift', 'sort', 'reverse']
@@ -96,6 +96,10 @@ class Compiler {
             const dir = attrName.slice(2)
             this[dir] && this[dir](node, exp)
           }
+          if (this.isMethod(attrName)) {
+            const dir = attrName.slice(1)
+            this.eventHandler(node, exp, dir)
+          }
         })
         if (node.childNodes) {
           this.compile(node)
@@ -114,6 +118,16 @@ class Compiler {
     })
   }
 
+  model (node, exp) {
+    this.update(node, exp, 'model')
+    node.addEventListener('input', e => {
+      this.vm[exp] = e.target.value
+    })
+  }
+
+  modelUpdater (node, val) {
+    node.value = val
+  }
 
   html (node, exp) {
     this.update(node, exp, 'html')
@@ -135,6 +149,10 @@ class Compiler {
     this.update(node, RegExp.$1, 'text')
   }
 
+  isMethod (attrName) {
+    return attrName.startsWith('@')
+  }
+
   isDir (attrName) {
     return attrName.startsWith('l-')
   }
@@ -145,6 +163,11 @@ class Compiler {
 
   isInner (node) {
     return node.nodeType === 3 && /\{\{(.*)\}\}/.test(node.textContent)
+  }
+
+  eventHandler (node, exp, dir) {
+    const fn = this.vm.$options.methods && this.vm.$options.methods[exp]
+    node.addEventListener(dir, fn.bind(this.vm))
   }
 }
 
