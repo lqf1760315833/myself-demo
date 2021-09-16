@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-10 14:42:06
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-10 17:30:43
+ * @LastEditTime: 2021-09-16 16:57:27
  * @Description: 我添加了修改
  */
 const methods = ['pop', 'shift', 'push', 'splice', 'unshift', 'sort', 'reverse']
@@ -53,6 +53,7 @@ class Observe {
     Object.keys(obj).forEach(key => defineReactive(obj, key, obj[key]))
   }
 }
+
 function proxy (vm, key) {
   Object.keys(vm[key]).forEach((k) => {
     Object.defineProperty(vm, k, {
@@ -73,125 +74,161 @@ class LVue {
 
     observe(this.$data)
     proxy(this, '$data')
-    new Compiler(options.el, this)
-  }
-}
 
-class Compiler {
-  constructor(el, vm) {
-    this.vm = vm
-    const dom = document.querySelector(el)
-    dom && this.compile(dom)
+    if (options.el) {
+      this.$mount(options.el)
+    }
   }
 
-  compile (el) {
-    const childNodes = el.childNodes
-    childNodes.forEach(node => {
-      if (this.isElement(node)) {
-        const attrs = node.attributes
-        Array.from(attrs).forEach(attr => {
-          const attrName = attr.name
-          const exp = attr.value
-          if (this.isDir(attrName)) {
-            const dir = attrName.slice(2)
-            this[dir] && this[dir](node, exp)
-          }
-          if (this.isMethod(attrName)) {
-            const dir = attrName.slice(1)
-            this.eventHandler(node, exp, dir)
-          }
-        })
-        if (node.childNodes) {
-          this.compile(node)
+  $mount (el) {
+    this.$el = document.querySelector(el)
+    const updateComponent = () => {
+      // dom 执行render，获取视图结构
+      // const el = this.$options.render.call(this);
+      // const parent = this.$el.parentElement;
+      // parent.insertBefore(el, this.$el.nextSibling);
+      // parent.removeChild(this.$el);
+      // this.$el = el;
+
+      // vnode
+      const vnode = this.$options.render.call(this, this.$createElement.bind(this))
+      console.log('vnode: ', vnode);
+      this._update(vnode)
+    }
+    new Watcher(this, updateComponent)
+  }
+
+  $createElement (tag, data, children) {
+    const obj = { tag, data, children }
+    // 指令、方法等（后续
+    if (data && data.directives) {
+      for (const directive in data.directives) {
+        if (Object.hasOwnProperty.call(data.directives, directive)) {
+          const dir = directive.slice(2)
+          const exp = data.directives[directive]
+          this[dir] && this[dir](obj, exp)
         }
-      } else if (this.isInner(node)) {
-        this.compileText(node)
       }
-    })
+    }
+    return obj
   }
 
-  update (node, exp, dir) {
-    const fn = this[dir + 'Updater']
-    fn && fn(node, this.vm[exp])
-    new Watcher(this.vm, exp, function (val) {
-      fn && fn(node, val)
-    })
+  _update (vnode) {
+    const prevVnode = this._vnode
+    if (!prevVnode) {
+      this.__patch__(this.$el, vnode)
+    } else {
+      this.__patch__(prevVnode, vnode)
+    }
   }
 
-  model (node, exp) {
-    this.update(node, exp, 'model')
-    node.addEventListener('input', e => {
-      this.vm[exp] = e.target.value
-    })
+  __patch__ (oldVnode, vnode) {
+    if (oldVnode.nodeType) {
+      // init
+      const el = this.createElm(vnode)
+      const parent = oldVnode.parentElement
+      const refElm = oldVnode.nextSibling
+      parent.insertBefore(el, refElm)
+      parent.removeChild(oldVnode)
+    } else {
+      // update
+      const el = (vnode.el = oldVnode.el)
+      if (oldVnode.tag === vnode.tag) {
+        const oldCh = oldVnode.children
+        const newCh = vnode.children
+        if (typeof newCh === 'string') {
+          if (typeof oldCh === 'string') {
+            if (oldCh !== newCh) {
+              el.textContent = newCh
+            }
+          } else {
+            el.textContent = newCh
+          }
+        } else {
+          if (typeof oldCh === 'string') {
+            el.innerHTML = ''
+            newCh.forEach((child) => {
+              el.appendChild(this.createElm(child))
+            })
+          } else if (Array.isArray(oldCh)) {
+            this.updateChildren(el, oldCh, newCh)
+          }
+        }
+      }
+    }
+
+    this._vnode = vnode
   }
 
-  modelUpdater (node, val) {
-    node.value = val
+  createElm (vnode) {
+    const el = document.createElement(vnode.tag)
+
+    if (vnode.children) {
+      if (typeof vnode.children === 'string') {
+        el.textContent = vnode.children
+      } else {
+        vnode.children.forEach((child) => {
+          el.appendChild(this.createElm(child))
+        })
+      }
+    }
+
+    // 保存el和vnode关系，将来更新需要用到
+    vnode.el = el
+    return el
   }
 
-  html (node, exp) {
-    this.update(node, exp, 'html')
-  }
-
-  htmlUpdater (node, val) {
-    node.innerHTML = val
+  updateChildren (parentElm, oldCh, newCh) {
+    const len = Math.min(oldCh.length, newCh.length)
+    for (let i = 0; i < len; i++) {
+      this.__patch__(oldCh[i], newCh[i])
+    }
+    if (oldCh.length < newCh.length) {
+      newCh.slice(len).forEach((child) => {
+        parentElm.appendChild(this.createElm(child))
+      })
+    } else {
+      oldCh.slice(len).forEach((child) => {
+        parentElm.removeChild(child.el)
+      })
+    }
   }
 
   text (node, exp) {
-    this.update(node, exp, 'text')
+    node.children = String(this[exp])
   }
 
-  textUpdater (node, val) {
-    node.textContent = val
-  }
+  // 后续继续优化
+  html (node, exp) {
 
-  compileText (node) {
-    this.update(node, RegExp.$1, 'text')
-  }
-
-  isMethod (attrName) {
-    return attrName.startsWith('@')
-  }
-
-  isDir (attrName) {
-    return attrName.startsWith('l-')
-  }
-
-  isElement (node) {
-    return node.nodeType === 1
-  }
-
-  isInner (node) {
-    return node.nodeType === 3 && /\{\{(.*)\}\}/.test(node.textContent)
-  }
-
-  eventHandler (node, exp, dir) {
-    const fn = this.vm.$options.methods && this.vm.$options.methods[exp]
-    node.addEventListener(dir, fn.bind(this.vm))
   }
 }
 
 class Watcher {
-  constructor(vm, key, fn) {
+  constructor(vm, fn) {
     this.vm = vm
-    this.key = key
-    this.fn = fn
-    Dep.target = this
-    this.vm[this.key]
-    Dep.target = null
+    this.getter = fn
+    this.get()
   }
+
   update () {
-    this.fn.call(this.vm, this.vm[this.key])
+    this.get()
+  }
+
+  get () {
+    Dep.target = this
+    this.getter.call(this.vm)
+    Dep.target = null
   }
 }
 
 class Dep {
   constructor() {
-    this.deps = []
+    this.deps = new Set()
   }
 
   addDep (watcher) {
-    this.deps.push(watcher)
+    this.deps.add(watcher)
   }
 
   notify () {
