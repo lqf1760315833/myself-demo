@@ -2,7 +2,7 @@
 
 > compileToFunctions：template => render
 > mountComponent
-> initGlobalAPI -- set,delete,use,mixin,extend,component,directive,filter
+> initGlobalAPI：set,delete,use,mixin,extend,component,directive,filter
 > mergeOptions
 > _init
 > 响应式
