@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-16 20:19:07
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-17 11:34:03
+ * @LastEditTime: 2021-09-17 16:02:37
  * @Description: 我添加了修改
 -->
 <template>
@@ -55,12 +55,12 @@ export default {
         if (isValid) {
           console.log('submit')
         } else {
-          alert('校验失败')
-          // this.$notice({
-          //   title: '11',
-          //   message: '22',
-          //   duration: 1000
-          // })
+          // alert('校验失败')
+          this.$notice({
+            title: '来搬砖了喔',
+            message: '校验失败',
+            duration: 1000
+          })
         }
       })
     }
