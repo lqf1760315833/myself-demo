@@ -11,7 +11,7 @@
   
 - 自定义表单 src/components/form
   + LForm
-  + LFormItem 
+  + LFormItem
   + LInput
 
 - 手写简版 vue-router src/lrouter
@@ -31,4 +31,4 @@
 
 - 手写简版 vue2 lvue2
   + 对 vue1 挂载以及更新操作的修改
-  + $mount -> Watcher -> updateCompoent -> $createElement -> _update -> `__patch__` -> createElm / updateChildren
+  + $mount -> Watcher -> updateComponent -> $createElement -> _update -> `__patch__` -> createElm / updateChildren
