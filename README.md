@@ -6,6 +6,8 @@
   + $parent / $children
   + provide / inject
   + $attrs / $listeners
+
+- 创建全局弹框 $notice src/component/Notice src/utils/create
   
 - 自定义表单 src/components/form
   + LForm
