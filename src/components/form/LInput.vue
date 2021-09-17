@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-17 11:25:08
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-17 11:31:36
+ * @LastEditTime: 2021-09-17 14:19:21
  * @Description: 我添加了修改
 -->
 <template>
@@ -13,6 +13,7 @@
 
 <script>
 export default {
+  inheritAttrs: false,
   props: {
     value: {
       type: String,

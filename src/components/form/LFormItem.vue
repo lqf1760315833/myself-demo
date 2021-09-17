@@ -2,14 +2,14 @@
  * @Author: Lqf
  * @Date: 2021-09-17 11:25:08
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-17 11:31:49
+ * @LastEditTime: 2021-09-17 14:38:04
  * @Description: 我添加了修改
 -->
 <template>
   <div>
     <label v-if="label">{{ label }}</label>
     <slot></slot>
-    <p v-if="error">{{ error }}</p>
+    <p v-if="error" style="color: red">{{ error }}</p>
   </div>
 </template>
 

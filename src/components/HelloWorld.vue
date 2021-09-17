@@ -2,17 +2,21 @@
  * @Author: Lqf
  * @Date: 2021-09-16 20:16:10
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-17 13:03:04
+ * @LastEditTime: 2021-09-17 14:38:31
  * @Description: 我添加了修改
 -->
 <template>
   <div class="hello">
     <communication-example />
     <form-example />
-    <p @click="$store.commit('add')">{{ $store.state.counter }}</p>
-    <p @click="$store.commit('add')">{{ $store.state.counter }}</p>
-    <p @click="$store.dispatch('add')">async:{{ $store.state.counter }}</p>
-    <p>doubleCounter: {{ $store.getters.doubleCounter }}</p>
+
+    <div class="store">
+      <h2>这里是 vuex</h2>
+      <p @click="$store.commit('add')">{{ $store.state.counter }}</p>
+      <p @click="$store.commit('add')">{{ $store.state.counter }}</p>
+      <p @click="$store.dispatch('add')">async:{{ $store.state.counter }}</p>
+      <p>doubleCounter: {{ $store.getters.doubleCounter }}</p>
+    </div>
   </div>
 </template>
 
