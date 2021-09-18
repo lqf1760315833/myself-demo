@@ -2,22 +2,26 @@
  * @Author: Lqf
  * @Date: 2021-09-17 11:21:14
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-18 10:39:01
+ * @LastEditTime: 2021-09-18 14:09:47
  * @Description: 我添加了修改
  */
 import Vue from 'vue'
 import App from './App.vue'
-// import router from './router'
-import router from './lrouter'
 
-// import store from './store'
-import store from './lstore'
+import router from './router'
+import store from './store'
+
+// import router from './lrouter'
+// import store from './lstore'
 
 import create from './utils/create'
 import Notice from './components/Notice.vue'
 
 // 引入 svg 全局配置
 import '@/icon'
+
+// 引入路由守卫 beforeEach
+import './premission'
 
 Vue.config.productionTip = false
 
