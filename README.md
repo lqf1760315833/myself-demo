@@ -1,3 +1,10 @@
+<!--
+ * @Author: Lqf
+ * @Date: 2021-09-18 10:53:00
+ * @LastEditors: Lqf
+ * @LastEditTime: 2021-09-18 10:57:19
+ * @Description: 我添加了修改
+-->
 # vue-sundry
 
 - 组件通信 src/components/communication
@@ -14,12 +21,19 @@
   + LFormItem
   + LInput
 
+- 简单配置 vue.config.js
+  + 公共路径，端口，别名，title
+  + 链式 webpack
+    + 加载 svg
+    + 自动导入 svg： <svg-icon />
+
 - 手写简版 vue-router src/lrouter
   + router-link / router-view 实现
-  + 嵌套路由响应式实现
+  + 构造了一个 pathMap 的闭包以便后续查找
+  + 实现了嵌套路由的功能，包括产生响应式 matched 数组（Vue.util.defineReactive）以及实时更新值，利用深度层级 depth 进行路由匹配
   
 - 手写简版 vuex src/lstore
-  + 实现 state 响应式
+  + 实现 state 响应式（new Vue）
   + 实现 commit, dispatch, getters
 
 - 手写简版 vue1 lvue1

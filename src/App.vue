@@ -2,20 +2,37 @@
  * @Author: Lqf
  * @Date: 2021-09-17 12:53:31
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-17 13:06:15
+ * @LastEditTime: 2021-09-18 10:35:11
  * @Description: 我添加了修改
 -->
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about/a">AboutA</router-link> |
-      <router-link to="/about/b">AboutB</router-link> |
+      <!-- <svg>
+        <use xlink:href="#icon-zz" />
+      </svg> -->
+      <router-link to="/">
+        <svg-icon icon-class="zz" />
+        Home
+      </router-link>
+      <router-link to="/about/a">
+        <svg-icon icon-class="zz2" />
+        AboutA</router-link
+      >
+      | <router-link to="/about/b">AboutB</router-link> |
       <router-link to="/info/a">InfoA</router-link>
     </div>
     <router-view />
   </div>
 </template>
+
+<script>
+// import '@/icon/svg/zz.svg'
+console.log(process.env.foo)
+console.log(process.env.VUE_APP_DONG)
+export default {
+}
+</script>
 
 <style lang="less">
 #app {
