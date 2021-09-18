@@ -1,4 +1,4 @@
-## git
+# git
 
 版本控制器
 
@@ -163,6 +163,7 @@
 - git checkout -b branch1 origin/branch1 远程仓库克隆分支
 - git push origin :branch 删除远程仓库分支
 - git push origin v1.0 推送标签到远程仓库
+  
   - git push origin --tags  推送所有标签
 - git push origin :refs/tags/v1.0 删除远程仓库的标签
 - ssh-keygen -t rsa -C "zmouse@miaov.com"
