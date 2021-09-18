@@ -1,10 +1,14 @@
 const state = {
-  token: localStorage.getItem('token')
+  token: localStorage.getItem('token'),
+  roles: []
 }
 
 const mutations = {
   setToken (state, token) {
     state.token = token
+  },
+  setRoles (state, roles) {
+    state.roles = roles
   }
 }
 
@@ -22,6 +26,24 @@ const actions = {
         }
       }, 500)
     })
+  },
+  getInfo ({ commit, state }) {
+    return new Promise(res => {
+      setTimeout(() => {
+        const roles = state.token === 'admin' ? ['admin'] : ['editor']
+        commit('setRoles', roles)
+        res({ roles })
+      }, 500)
+    })
+  },
+  resetToken ({ commit }) {
+    return new Promise((res) => {
+      commit('setToken', '')
+      commit('setRoles', [])
+      localStorage.removeItem('token')
+      res()
+    })
+
   }
 }
 

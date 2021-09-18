@@ -1,9 +1,10 @@
 import router from "./router"
+import store from './store'
 
 // 白名单
 const whiteList = ['/login']
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // 获取token以验证
   const hasToken = localStorage.getItem('token')
 
@@ -12,8 +13,22 @@ router.beforeEach((to, from, next) => {
       // 已登录直接放入首页
       next('/')
     } else {
-      // 直接通过并处理后续逻辑
-      next()
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      if (hasRoles) {
+        next()
+      } else {
+
+        try {
+          const { roles } = await store.dispatch('user/getInfo')
+          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          router.addRoutes(accessRoutes)
+          next({ ...to, replace: true })
+        } catch (error) {
+          await store.dispatch('user/resetToken')
+          next(`/login?redirect=${to.path}`)
+          alert(error)
+        }
+      }
     }
   } else {
     if (whiteList.indexOf(to.path) !== -1) {

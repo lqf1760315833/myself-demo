@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-17 12:53:31
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-18 10:35:11
+ * @LastEditTime: 2021-09-18 15:34:31
  * @Description: 我添加了修改
 -->
 <template>
@@ -15,6 +15,7 @@
         <svg-icon icon-class="zz" />
         Home
       </router-link>
+      | <router-link to="/about">About</router-link> |
       <router-link to="/about/a">
         <svg-icon icon-class="zz2" />
         AboutA</router-link
