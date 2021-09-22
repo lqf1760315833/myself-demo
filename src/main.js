@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-17 11:21:14
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-18 14:09:47
+ * @LastEditTime: 2021-09-22 09:35:14
  * @Description: 我添加了修改
  */
 import Vue from 'vue'
@@ -22,6 +22,11 @@ import '@/icon'
 
 // 引入路由守卫 beforeEach
 import './premission'
+
+// 引入按钮权限
+import vPermission from './directives/permission'
+Vue.directive('permission', vPermission)
+
 
 Vue.config.productionTip = false
 
