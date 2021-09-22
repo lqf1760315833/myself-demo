@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-18 10:53:00
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-22 10:27:50
+ * @LastEditTime: 2021-09-22 19:40:29
  * @Description: 我添加了修改
 -->
 # vue-sundry
@@ -27,11 +27,13 @@
     + 加载 svg
     + 自动导入 svg： `<svg-icon />`  src/icon
 
-
-
-
-
-
+- 路由相关内容
+  + 登录以及登录状态维护（token）
+  + 角色权限以及权限路由过滤
+  + 按钮权限
+  + 自动生成导航菜单
+  + 请求封装，数据本地mock
+  + 
 
 
 - 手写简版 vue-router src/lrouter

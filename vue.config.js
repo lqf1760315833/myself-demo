@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-18 09:04:53
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-18 10:18:23
+ * @LastEditTime: 2021-09-22 19:40:19
  * @Description: 我添加了修改
  */
 
@@ -10,12 +10,47 @@ const path = require('path')
 
 const port = 8888
 const resolve = (dir) => path.join(__dirname, dir)
+
+
 console.log(process.env.foo)
 console.log(process.env.VUE_APP_DONG)
+
+const bodyParser = require("body-parser")
+
 module.exports = {
   publicPath: '/best-practice',
   devServer: {
-    port
+    port,
+    // 本地mock
+    before: app => {
+      app.use(bodyParser.json())
+      console.log(111)
+      app.post('/dev-api/user/login', (req, res) => {
+        const { username } = req.body
+
+        if (username === "admin" || username === "jerry") {
+          res.json({
+            code: 1,
+            data: username
+          })
+        } else {
+          res.json({
+            code: 10204,
+            message: "用户名或密码错误"
+          })
+        }
+      })
+
+      app.get("/dev-api/user/info", (req, res) => {
+        const auth = req.headers["authorization"]
+        const roles = auth.split(' ')[1] === "admin" ? ["admin"] : ["editor"]
+        res.json({
+          code: 1,
+          data: roles
+        })
+      })
+
+    }
   },
   // configureWebpack: {
   //   name: 'vue杂项',

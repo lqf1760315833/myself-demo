@@ -1,3 +1,10 @@
+/*
+ * @Author: Lqf
+ * @Date: 2021-09-22 15:50:58
+ * @LastEditors: Lqf
+ * @LastEditTime: 2021-09-22 16:00:05
+ * @Description: 我添加了修改
+ */
 import router from "./router"
 import store from './store'
 
@@ -17,7 +24,7 @@ router.beforeEach(async (to, from, next) => {
       if (hasRoles) {
         next()
       } else {
-
+        // 获取权限路由
         try {
           const { roles } = await store.dispatch('user/getInfo')
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)

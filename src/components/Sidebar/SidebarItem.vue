@@ -2,11 +2,12 @@
  * @Author: Lqf
  * @Date: 2021-09-22 13:35:40
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-22 15:28:47
+ * @LastEditTime: 2021-09-22 16:02:20
  * @Description: 我添加了修改
 -->
 <template>
   <div v-if="!item.hidden">
+    <!-- 唯一显示子元素的情况显示为链接 -->
     <template
       v-if="
         hasOneShowingChild(item.children, item) &&
@@ -30,12 +31,14 @@
       </router-link>
     </template>
 
+    <!-- 有子元素显示为菜单 -->
     <el-submenu
       v-else
       ref="submenu"
       :index="resolvePath(item.path)"
       popper-append-to-body
     >
+      <!-- 标题 -->
       <template>
         <item
           v-if="item.meta"
@@ -43,6 +46,7 @@
           :title="item.meta.title"
         />
       </template>
+      <!-- 子菜单 -->
       <sidebar-item
         v-for="child in item.children"
         :key="child.path"
@@ -88,12 +92,15 @@ export default {
         if (item.hidden) {
           return false
         }
+        // 如果只有一个子菜单时设置
         this.onlyOneChild = item
         return true
       })
+      // 当只有一个子路由，该子路由默认显示
       if (showingChildren.length === 1) {
         return true
       }
+      // 没有子路由则显示父路由
       if (showingChildren.length === 0) {
         this.onlyOneChild = { ...parent, path: '', noShowingChildren: true }
         return true
