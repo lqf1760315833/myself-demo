@@ -2,11 +2,12 @@
  * @Author: Lqf
  * @Date: 2021-09-17 11:21:14
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-22 09:35:14
+ * @LastEditTime: 2021-09-22 10:42:59
  * @Description: 我添加了修改
  */
 import Vue from 'vue'
 import App from './App.vue'
+import './plugins/element.js'
 
 import router from './router'
 import store from './store'

@@ -13,7 +13,7 @@
 export default {
   data () {
     return {
-      username: 'value'
+      username: 'admin'
     }
   },
   methods: {

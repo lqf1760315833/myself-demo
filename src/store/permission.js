@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-18 14:57:07
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-18 17:26:52
+ * @LastEditTime: 2021-09-22 15:30:57
  * @Description: 我添加了修改
  */
 import { asyncRoutes, constRoutes } from "../router"
@@ -41,9 +41,9 @@ export function filterAsyncRoutes (routes, roles) {
   const res = []
   routes.forEach(route => {
     const tmp = { ...route }
-    if (hasPermission(route, roles)) {
-      if (route.children) {
-        tmp.children = filterAsyncRoutes(route, roles)
+    if (hasPermission(tmp, roles)) {
+      if (tmp.children) {
+        tmp.children = filterAsyncRoutes(tmp.children, roles)
       }
       res.push(tmp)
     }

@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-18 10:53:00
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-18 10:59:15
+ * @LastEditTime: 2021-09-22 10:27:50
  * @Description: 我添加了修改
 -->
 # vue-sundry
@@ -25,7 +25,14 @@
   + 公共路径，端口，别名，title
   + 链式 webpack
     + 加载 svg
-    + 自动导入 svg： <svg-icon />
+    + 自动导入 svg： `<svg-icon />`  src/icon
+
+
+
+
+
+
+
 
 - 手写简版 vue-router src/lrouter
   + router-link / router-view 实现

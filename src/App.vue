@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-17 12:53:31
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-18 15:34:31
+ * @LastEditTime: 2021-09-22 10:40:39
  * @Description: 我添加了修改
 -->
 <template>
@@ -11,16 +11,24 @@
       <!-- <svg>
         <use xlink:href="#icon-zz" />
       </svg> -->
+      <Sidebar />
       <router-link to="/">
         <svg-icon icon-class="zz" />
         Home
       </router-link>
-      | <router-link to="/about">About</router-link> |
+      |
+      <router-link to="/about">
+        <svg-icon icon-class="denglong" />
+        About</router-link
+      >
+      |
       <router-link to="/about/a">
         <svg-icon icon-class="zz2" />
         AboutA</router-link
       >
-      | <router-link to="/about/b">AboutB</router-link> |
+      |
+      <router-link to="/about/b"> AboutB</router-link>
+      |
       <router-link to="/info/a">InfoA</router-link>
     </div>
     <router-view />
@@ -31,7 +39,12 @@
 // import '@/icon/svg/zz.svg'
 console.log(process.env.foo)
 console.log(process.env.VUE_APP_DONG)
+
+import Sidebar from './components/Sidebar'
 export default {
+  components: {
+    Sidebar
+  }
 }
 </script>
 
