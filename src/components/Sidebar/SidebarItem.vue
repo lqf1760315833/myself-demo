@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-22 13:35:40
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-22 16:02:20
+ * @LastEditTime: 2021-09-23 14:52:43
  * @Description: 我添加了修改
 -->
 <template>
@@ -83,8 +83,9 @@ export default {
     },
   },
   data () {
-    this.onlyOneChild = null
-    return {}
+    return {
+      onlyOneChild: null
+    }
   },
   methods: {
     hasOneShowingChild (children = [], parent) {
