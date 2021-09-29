@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-18 10:53:00
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-23 15:14:43
+ * @LastEditTime: 2021-09-29 10:32:52
  * @Description: 我添加了修改
 -->
 # vue-sundry
@@ -13,13 +13,17 @@
   + $parent / $children
   + provide / inject
   + $attrs / $listeners
-
-- 创建全局弹框 $notice src/component/Notice src/utils/create
   
 - 自定义表单 src/components/form
   + LForm
   + LFormItem
   + LInput
+
+- 自定义简易树 src/components/tree
+  + Tree
+  + TreeNode
+
+- 创建全局弹框 $notice src/component/Notice src/utils/create
 
 - 简单配置 vue.config.js
   + 公共路径，端口，别名，title

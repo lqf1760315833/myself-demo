@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-23 14:57:06
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-23 15:13:12
+ * @LastEditTime: 2021-09-29 10:04:15
  * @Description: 我添加了修改
  */
 const express = require('express')
@@ -18,7 +18,6 @@ app.use(
 
 app.post('/user/login', (req, res) => {
   const { username } = req.body
-
   if (username === "admin" || username === "jerry") {
     res.json({
       code: 1,
@@ -33,7 +32,6 @@ app.post('/user/login', (req, res) => {
 })
 
 app.get("/user/info", (req, res) => {
-  console.log('req: ', req)
   const roles = req.headers['authorization'].split(' ')[1] ? ["admin"] : ["editor"]
   res.json({
     code: 1,

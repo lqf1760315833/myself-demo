@@ -2,13 +2,14 @@
  * @Author: Lqf
  * @Date: 2021-09-16 20:16:10
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-17 14:38:31
+ * @LastEditTime: 2021-09-29 10:31:26
  * @Description: 我添加了修改
 -->
 <template>
   <div class="hello">
     <communication-example />
     <form-example />
+    <tree-example />
 
     <div class="store">
       <h2>这里是 vuex</h2>
@@ -23,6 +24,7 @@
 <script>
 import FormExample from './form'
 import CommunicationExample from './communication'
+import TreeExample from './tree'
 export default {
   name: 'HelloWorld',
   props: {
@@ -30,7 +32,8 @@ export default {
   },
   components: {
     CommunicationExample,
-    FormExample
+    FormExample,
+    TreeExample
   }
 }
 </script>
