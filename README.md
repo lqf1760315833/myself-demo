@@ -22,6 +22,10 @@
 - 自定义简易树 src/components/tree
   + Tree
   + TreeNode
+- 自定义回到顶部组件 src/components/scrollToTop
+  + 自定义绑定节点
+  + 是否开启缓冲动画效果
+  + 滚动监听
 
 - 创建全局弹框 $notice src/component/Notice src/utils/create
 
