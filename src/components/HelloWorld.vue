@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-16 20:16:10
  * @LastEditors: Lqf
- * @LastEditTime: 2021-10-13 10:56:29
+ * @LastEditTime: 2021-10-21 16:21:04
  * @Description: 我添加了修改
 -->
 <template>
@@ -13,6 +13,18 @@
     <form-example />
     <!-- tree -->
     <tree-example />
+    <!-- table -->
+    <table-example :data="tableData">
+      <table-column sortable prop="data" label="日期" />
+      <table-column sortable prop="name" label="姓名" />
+      <table-column prop="address" label="地址" />
+      <table-column label="操作">
+        <template v-slot:default="scope">
+          <button @click="handleEdit(scope.$index, scope.row)">编辑</button>
+          <button @click="handleDelete(scope.$index, scope.row)">删除</button>
+        </template>
+      </table-column>
+    </table-example>
     <!-- store -->
     <div class="store">
       <h2>这里是 vuex</h2>
@@ -39,7 +51,10 @@
 import FormExample from './form'
 import CommunicationExample from './communication'
 import TreeExample from './tree'
+import TableExample from './table'
+import TableColumn from './table/TableColumn.vue'
 import ScrollToTop from './scrollToTop'
+
 export default {
   name: 'HelloWorld',
   props: {
@@ -49,16 +64,48 @@ export default {
     CommunicationExample,
     FormExample,
     TreeExample,
+    TableExample,
+    TableColumn,
     ScrollToTop
   },
-  methods: {
-    anasiyo () {
-      console.log(123213213213)
-    },
-    hello () {
-      this.anasiyo()
+  data() {
+    return {
+      tableData: [
+        {
+          data: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄',
+          operation: '添加'
+        },
+        {
+          data: '2016-05-04',
+          name: '王小二',
+          address: '上海市普陀区金沙江路 1517 弄',
+          operation: '删除'
+        },
+        {
+          data: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄',
+          operation: '修改'
+        },
+        {
+          data: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄',
+          operation: '查找'
+        }
+      ]
     }
   },
+  methods: {
+    anasiyo() {
+      console.log(123213213213)
+    },
+    hello() {
+      this.anasiyo()
+    }
+  }
 }
 </script>
 

@@ -40,7 +40,7 @@
 console.log(process.env.foo)
 console.log(process.env.VUE_APP_DONG)
 
-import Sidebar from './components/Sidebar'
+import Sidebar from './components/sidebar'
 export default {
   components: {
     Sidebar

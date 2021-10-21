@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-18 10:53:00
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-29 10:32:52
+ * @LastEditTime: 2021-10-21 16:11:25
  * @Description: 我添加了修改
 -->
 # vue-sundry
@@ -22,10 +22,17 @@
 - 自定义简易树 src/components/tree
   + Tree
   + TreeNode
+  
 - 自定义回到顶部组件 src/components/scrollToTop
   + 自定义绑定节点
   + 是否开启缓冲动画效果
   + 滚动监听
+
+- 自定义表格 src/components/table
+  + 自动渲染出表格内容
+  + 利于scopedSlots可添加自定义内容
+  + 简易的排序功能
+  + 简易的代码测试功能
 
 - 创建全局弹框 $notice src/component/Notice src/utils/create
 
