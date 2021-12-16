@@ -2,18 +2,21 @@
  * @Author: Lqf
  * @Date: 2021-10-12 15:49:57
  * @LastEditors: Lqf
- * @LastEditTime: 2021-10-13 11:00:30
+ * @LastEditTime: 2021-12-16 18:33:14
  * @Description: 暴露的API：scrollNode,altitude,easing,className,iconClassName,styles,scrollTop
 -->
 <template>
   <transition name="el-fade-in">
     <div
-      ref="scrollTop"
       v-show="toTopShow"
+      ref="scrollTop"
       class="scroll-top"
       @click="scrollToTop"
     >
-      <i ref="iconTop" class="icon-top"></i>
+      <i
+        ref="iconTop"
+        class="icon-top"
+      />
     </div>
   </transition>
 </template>
@@ -23,7 +26,10 @@ export default {
   name: 'ScrollToTop',
   props: {
     // 具有滚动效果的父级，默认为documentElement
-    scrollNode: String,
+    scrollNode: {
+      type: String,
+      default: '#app'
+    },
     // 距离顶部大于该值则显示交互按钮
     altitude: {
       type: Number,
@@ -35,12 +41,21 @@ export default {
       default: true
     },
     // class样式
-    className: String,
+    className: {
+      type: String,
+      default: ''
+    },
     // style样式
-    styles: String,
-    iconClassName: String
+    styles: {
+      type: String,
+      default: ''
+    },
+    iconClassName: {
+      type: String,
+      default: ''
+    }
   },
-  data () {
+  data() {
     return {
       // 挂载的父级节点
       node: document.documentElement,
@@ -48,7 +63,7 @@ export default {
       toTopShow: false
     }
   },
-  mounted () {
+  mounted() {
     // 获取传入的父级元素，未传入则使用默认元素
     if (this.scrollNode) {
       // 先判断id再判断class
@@ -80,18 +95,19 @@ export default {
       window.addEventListener('resize', this.resize)
     })
   },
-  destroyed () {
+  destroyed() {
     // 销毁滚动监听
     window.removeEventListener('scroll', this.handleScroll, true)
   },
   methods: {
     // 元素右侧距离父级默认为30px
-    resize () {
-      const offsetRight = window.innerWidth - this.node.offsetLeft - this.node.offsetWidth
+    resize() {
+      const offsetRight =
+        window.innerWidth - this.node.offsetLeft - this.node.offsetWidth
       this.$refs.scrollTop.style.right = offsetRight + 30 + 'px'
     },
     // 滚动监听显示
-    handleScroll () {
+    handleScroll() {
       this.scrollTop = this.node.scrollTop
       if (this.scrollTop >= this.altitude) {
         this.toTopShow = true
@@ -100,7 +116,7 @@ export default {
       }
     },
     // 点击返回父级最顶层
-    scrollToTop () {
+    scrollToTop() {
       // 不设置缓动形式则直接跳转
       if (!this.easing) {
         this.node.scrollTop = 0
@@ -110,7 +126,7 @@ export default {
       let timer = null
       cancelAnimationFrame(timer)
       const _this = this
-      timer = requestAnimationFrame(function fn () {
+      timer = requestAnimationFrame(function fn() {
         if (_this.node.scrollTop > 5000) {
           _this.node.scrollTop -= 1000
           timer = requestAnimationFrame(fn)
@@ -132,7 +148,7 @@ export default {
       })
       this.$emit('scrollTop')
     }
-  },
+  }
 }
 </script>
 

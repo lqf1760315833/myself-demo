@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-22 14:13:15
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-22 14:16:22
+ * @LastEditTime: 2021-12-16 18:26:59
  * @Description: 我添加了修改
 -->
 <script>
@@ -19,7 +19,7 @@ export default {
       default: ''
     }
   },
-  render (h, context) {
+  render(h, context) {
     const { icon, title } = context.props
     const vnodes = []
 

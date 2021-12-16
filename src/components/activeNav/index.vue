@@ -2,23 +2,23 @@
  * @Author: Lqf
  * @Date: 2021-11-25 19:18:04
  * @LastEditors: Lqf
- * @LastEditTime: 2021-11-26 11:58:10
+ * @LastEditTime: 2021-12-16 18:07:22
  * @Description: 我添加了修改
 -->
 <template>
   <div
-    class="activeNav"
     ref="nav"
+    class="activeNav"
   >
     <div
-      class="nav nav2"
       ref="nav2"
+      class="nav nav2"
     >
       <slot name="paging" />
     </div>
     <div
-      class="nav nav1"
       ref="nav1"
+      class="nav nav1"
     >
       <slot name="index" />
     </div>
@@ -29,12 +29,17 @@
 export default {
   name: 'BizActiveNav',
   props: {
-    navHeight: String,
+    navHeight: {
+      type: String,
+      default: ''
+    },
     nav1: {
-      type: [String, Object]
+      type: [String, Object],
+      default: ''
     },
     nav2: {
-      type: [String, Object]
+      type: [String, Object],
+      default: ''
     }
   },
   mounted() {
@@ -58,11 +63,11 @@ export default {
     scrollFunc(e) {
       e = e || window.event
       if (e.wheelDelta < 0) {
-        this.$refs.nav1.style.top = "-100%"
-        this.$refs.nav2.style.top = "0%"
+        this.$refs.nav1.style.top = '-100%'
+        this.$refs.nav2.style.top = '0%'
       } else {
-        this.$refs.nav1.style.top = "0"
-        this.$refs.nav2.style.top = "100%"
+        this.$refs.nav1.style.top = '0'
+        this.$refs.nav2.style.top = '100%'
       }
     },
     analysisStyle(style, target) {
@@ -80,7 +85,7 @@ export default {
         })
       }
     }
-  },
+  }
 }
 </script>
 

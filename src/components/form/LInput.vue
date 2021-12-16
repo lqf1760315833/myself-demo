@@ -2,12 +2,17 @@
  * @Author: Lqf
  * @Date: 2021-09-17 11:25:08
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-17 14:19:21
+ * @LastEditTime: 2021-12-16 18:34:12
  * @Description: 我添加了修改
 -->
 <template>
   <div>
-    <input :type="type" :value="value" @change="onInput" v:bind="$attrs" />
+    <input
+      :type="type"
+      :value="value"
+      v:bind="$attrs"
+      @change="onInput"
+    />
   </div>
 </template>
 
@@ -25,7 +30,7 @@ export default {
     }
   },
   methods: {
-    onInput (e) {
+    onInput(e) {
       this.$emit('input', e.target.value)
       this.$parent.$emit('validate')
     }

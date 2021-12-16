@@ -6,7 +6,5 @@
  * @Description: 我添加了修改
 -->
 <script>
-export default {
-  
-}
+export default {}
 </script>

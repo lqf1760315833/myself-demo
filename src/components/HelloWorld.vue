@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-16 20:16:10
  * @LastEditors: Lqf
- * @LastEditTime: 2021-11-26 12:04:40
+ * @LastEditTime: 2021-12-16 18:34:36
  * @Description: 我添加了修改
 -->
 <template>
@@ -53,20 +53,20 @@
       <scroll-to-top
         :altitude="200"
         :easing="true"
-        className="add"
-        iconClassName="add-top"
+        class="add"
+        icon-class-name="add-top"
         @scrollTop="hello"
       />
     </div>
     <!-- activeNav -->
     <active-nav
-      navHeight="15%"
+      nav-height="15%"
       :nav1="nav1"
       :nav2="nav2"
     >
       <div
-        class="index"
         slot="index"
+        class="index"
       >
         <div
           v-for="item in title1"
@@ -74,8 +74,8 @@
         >{{ item.content }}</div>
       </div>
       <div
-        class="paging"
         slot="paging"
+        class="paging"
       >
         <div
           v-for="item in title2"
@@ -97,9 +97,6 @@ import ActiveNav from './activeNav'
 
 export default {
   name: 'HelloWorld',
-  props: {
-    msg: String
-  },
   components: {
     CommunicationExample,
     FormExample,
@@ -108,6 +105,12 @@ export default {
     TableColumn,
     ScrollToTop,
     ActiveNav
+  },
+  props: {
+    msg: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {
@@ -149,7 +152,7 @@ export default {
         {
           id: 3,
           content: '会员 '
-        },
+        }
       ],
       title2: [
         {
@@ -163,7 +166,7 @@ export default {
         {
           id: 3,
           content: '会员2 '
-        },
+        }
       ],
       nav1: 'color: red; padding-left: 15%; background: rgba(123, 23, 213, 0.1)',
       nav2: {

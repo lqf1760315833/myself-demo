@@ -9,7 +9,7 @@ function addRouteRecord (routes, pathMap, parent) {
   })
 }
 
-const createRouteMap = (routes, pathMap = { }) => {
+const createRouteMap = (routes, pathMap = {}) => {
   addRouteRecord(routes, pathMap)
   return pathMap
 }

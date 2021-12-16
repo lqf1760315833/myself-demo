@@ -2,11 +2,14 @@
  * @Author: Lqf
  * @Date: 2021-09-18 10:21:57
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-18 10:34:06
+ * @LastEditTime: 2021-12-16 18:27:40
  * @Description: 我添加了修改
 -->
 <template>
-  <svg :class="svgClass" v-on="$listeners">
+  <svg
+    :class="svgClass"
+    v-on="$listeners"
+  >
     <use :xlink:href="iconName" />
   </svg>
 </template>
@@ -25,17 +28,17 @@ export default {
     }
   },
   computed: {
-    iconName () {
+    iconName() {
       return `#icon-${this.iconClass}`
     },
-    svgClass () {
+    svgClass() {
       if (this.className) {
         return 'svg-icon' + this.className
       } else {
         return 'svg-icon'
       }
     }
-  },
+  }
 }
 </script>
 

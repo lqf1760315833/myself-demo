@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-08-30 14:03:38
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-01 09:33:56
+ * @LastEditTime: 2021-12-16 18:28:52
  * @Description: 我添加了修改
  */
 import Vue from 'vue'
@@ -23,12 +23,12 @@ export default new Vuex.Store({
     add ({ commit }) {
       setTimeout(() => {
         commit('add')
-      }, 1000);
+      }, 1000)
     }
   },
   getters: {
     doubleCounter: state => {
-      return state.counter * 2;
+      return state.counter * 2
     }
   }
 })

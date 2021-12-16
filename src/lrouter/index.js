@@ -1,3 +1,10 @@
+/*
+ * @Author: Lqf
+ * @Date: 2021-09-18 11:08:10
+ * @LastEditors: Lqf
+ * @LastEditTime: 2021-12-16 18:28:25
+ * @Description: 我添加了修改
+ */
 import Vue from 'vue'
 import VueRouter from './lvue-router'
 import Home from '../views/Home.vue'

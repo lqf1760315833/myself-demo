@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-22 13:35:40
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-23 14:52:43
+ * @LastEditTime: 2021-12-16 18:27:02
  * @Description: 我添加了修改
 -->
 <template>
@@ -11,8 +11,8 @@
     <template
       v-if="
         hasOneShowingChild(item.children, item) &&
-        (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
-        !item.alwaysShow
+          (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
+          !item.alwaysShow
       "
     >
       <router-link
@@ -66,7 +66,7 @@ import path from 'path'
 export default {
   name: 'SidebarItem',
   components: {
-    Item,
+    Item
   },
   props: {
     item: {
@@ -80,15 +80,15 @@ export default {
     isNest: {
       type: Boolean,
       default: false
-    },
+    }
   },
-  data () {
+  data() {
     return {
       onlyOneChild: null
     }
   },
   methods: {
-    hasOneShowingChild (children = [], parent) {
+    hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {
         if (item.hidden) {
           return false
@@ -108,7 +108,7 @@ export default {
       }
       return false
     },
-    resolvePath (routePath) {
+    resolvePath(routePath) {
       return path.resolve(this.basePath + '/' + routePath)
     }
   }

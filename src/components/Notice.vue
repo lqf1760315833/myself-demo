@@ -2,11 +2,14 @@
  * @Author: Lqf
  * @Date: 2021-09-17 15:54:32
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-17 16:03:22
+ * @LastEditTime: 2021-12-16 18:27:28
  * @Description: 我添加了修改
 -->
 <template>
-  <div class="box" v-if="isShow">
+  <div
+    v-if="isShow"
+    class="box"
+  >
     <h3>{{ title }}</h3>
     <div class="box-content">{{ message }}</div>
   </div>
@@ -28,21 +31,21 @@ export default {
       default: 1000
     }
   },
-  data () {
+  data() {
     return {
       isShow: false
     }
   },
   methods: {
-    show () {
+    show() {
       this.isShow = true
       setTimeout(this.hide, this.duration)
     },
-    hide () {
+    hide() {
       this.isShow = false
       this.remove()
     }
-  },
+  }
 }
 </script>
 

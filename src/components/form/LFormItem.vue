@@ -2,14 +2,17 @@
  * @Author: Lqf
  * @Date: 2021-09-17 11:25:08
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-17 14:38:04
+ * @LastEditTime: 2021-12-16 17:57:02
  * @Description: 我添加了修改
 -->
 <template>
   <div>
     <label v-if="label">{{ label }}</label>
-    <slot></slot>
-    <p v-if="error" style="color: red">{{ error }}</p>
+    <slot />
+    <p
+      v-if="error"
+      style="color: red"
+    >{{ error }}</p>
   </div>
 </template>
 
@@ -22,15 +25,18 @@ export default {
       type: String,
       default: ''
     },
-    prop: String
+    prop: {
+      type: String,
+      default: ''
+    }
   },
-  data () {
+  data() {
     return {
       error: ''
     }
   },
   methods: {
-    validate () {
+    validate() {
       const value = this.form.model[this.prop]
       const rules = this.form.rules[this.prop]
       const validator = new Validator({ [this.prop]: rules })

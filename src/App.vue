@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-17 12:53:31
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-22 10:40:39
+ * @LastEditTime: 2021-12-16 18:29:44
  * @Description: 我添加了修改
 -->
 <template>
@@ -10,25 +10,18 @@
     <div id="nav">
       <!-- <svg>
         <use xlink:href="#icon-zz" />
-      </svg> -->
+      </svg>-->
       <Sidebar />
       <router-link to="/">
-        <svg-icon icon-class="zz" />
-        Home
-      </router-link>
-      |
+        <svg-icon icon-class="zz" />Home
+      </router-link>|
       <router-link to="/about">
-        <svg-icon icon-class="denglong" />
-        About</router-link
-      >
-      |
+        <svg-icon icon-class="denglong" />About
+      </router-link>|
       <router-link to="/about/a">
-        <svg-icon icon-class="zz2" />
-        AboutA</router-link
-      >
-      |
-      <router-link to="/about/b"> AboutB</router-link>
-      |
+        <svg-icon icon-class="zz2" />AboutA
+      </router-link>|
+      <router-link to="/about/b">AboutB</router-link>|
       <router-link to="/info/a">InfoA</router-link>
     </div>
     <router-view />

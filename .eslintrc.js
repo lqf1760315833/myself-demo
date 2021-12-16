@@ -2,7 +2,7 @@
  * @Author: Lqf
  * @Date: 2021-09-18 11:08:09
  * @LastEditors: Lqf
- * @LastEditTime: 2021-10-21 15:37:30
+ * @LastEditTime: 2021-12-16 19:44:06
  * @Description: 我添加了修改
  */
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
     node: true
   },
   'extends': [
-    'plugin:vue/essential',
+    'plugin:vue/recommended',
     'eslint:recommended'
   ],
   parserOptions: {
