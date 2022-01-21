@@ -1,178 +1,54 @@
 <!--
  * @Author: Lqf
- * @Date: 2021-10-12 15:49:57
+ * @Date: 2021-10-13 11:03:08
  * @LastEditors: Lqf
- * @LastEditTime: 2021-12-16 18:33:14
- * @Description: 暴露的API：scrollNode,altitude,easing,className,iconClassName,styles,scrollTop
+ * @LastEditTime: 2022-01-21 15:27:46
+ * @Description: 我添加了修改
 -->
+
 <template>
-  <transition name="el-fade-in">
+  <div id="scroll">
     <div
-      v-show="toTopShow"
-      ref="scrollTop"
-      class="scroll-top"
-      @click="scrollToTop"
-    >
-      <i
-        ref="iconTop"
-        class="icon-top"
-      />
-    </div>
-  </transition>
+      v-for="index of 1000"
+      :key="index"
+    >这是第{{ index }}个div</div>
+    <scroll-to-top
+      :altitude="200"
+      :easing="true"
+      class="add"
+      icon-class-name="add-top"
+      @scrollTop="hello"
+    />
+  </div>
 </template>
 
 <script>
+import ScrollToTop from './ScrollToTop'
 export default {
-  name: 'ScrollToTop',
-  props: {
-    // 具有滚动效果的父级，默认为documentElement
-    scrollNode: {
-      type: String,
-      default: '#app'
-    },
-    // 距离顶部大于该值则显示交互按钮
-    altitude: {
-      type: Number,
-      default: 300
-    },
-    // 是否采取缓动返回
-    easing: {
-      type: Boolean,
-      default: true
-    },
-    // class样式
-    className: {
-      type: String,
-      default: ''
-    },
-    // style样式
-    styles: {
-      type: String,
-      default: ''
-    },
-    iconClassName: {
-      type: String,
-      default: ''
-    }
-  },
-  data() {
-    return {
-      // 挂载的父级节点
-      node: document.documentElement,
-      // 是否显示
-      toTopShow: false
-    }
-  },
-  mounted() {
-    // 获取传入的父级元素，未传入则使用默认元素
-    if (this.scrollNode) {
-      // 先判断id再判断class
-      const nodeById = document.querySelector('#' + this.scrollNode)
-      const nodeByClass = document.querySelector('.' + this.scrollNode)
-      if (nodeById) {
-        this.node = nodeById
-      } else if (nodeByClass) {
-        this.node = nodeByClass
-      }
-    }
-    this.resize()
-    // 添加class样式
-    this.$refs.scrollTop.classList.add(this.className)
-    this.$refs.iconTop.classList.add(this.iconClassName)
-    // 添加style样式
-    if (this.styles) {
-      const array = this.styles.split(';')
-      array.forEach(style => {
-        if (style) {
-          const st = style.split(':')
-          this.$refs.scrollTop.style[st[0].trim()] = st[1]
-        }
-      })
-    }
-    // 进行滚动监听
-    this.$nextTick(() => {
-      window.addEventListener('scroll', this.handleScroll, true)
-      window.addEventListener('resize', this.resize)
-    })
-  },
-  destroyed() {
-    // 销毁滚动监听
-    window.removeEventListener('scroll', this.handleScroll, true)
+  components: {
+    ScrollToTop
   },
   methods: {
-    // 元素右侧距离父级默认为30px
-    resize() {
-      const offsetRight =
-        window.innerWidth - this.node.offsetLeft - this.node.offsetWidth
-      this.$refs.scrollTop.style.right = offsetRight + 30 + 'px'
-    },
-    // 滚动监听显示
-    handleScroll() {
-      this.scrollTop = this.node.scrollTop
-      if (this.scrollTop >= this.altitude) {
-        this.toTopShow = true
-      } else {
-        this.toTopShow = false
-      }
-    },
-    // 点击返回父级最顶层
-    scrollToTop() {
-      // 不设置缓动形式则直接跳转
-      if (!this.easing) {
-        this.node.scrollTop = 0
-        return
-      }
-      // 设置缓动则以动画帧方式返回顶层
-      let timer = null
-      cancelAnimationFrame(timer)
-      const _this = this
-      timer = requestAnimationFrame(function fn() {
-        if (_this.node.scrollTop > 5000) {
-          _this.node.scrollTop -= 1000
-          timer = requestAnimationFrame(fn)
-        } else if (_this.node.scrollTop > 1000) {
-          _this.node.scrollTop -= 500
-          timer = requestAnimationFrame(fn)
-        } else if (_this.node.scrollTop > 200) {
-          _this.node.scrollTop -= 100
-          timer = requestAnimationFrame(fn)
-        } else if (_this.node.scrollTop > 50) {
-          _this.node.scrollTop -= 10
-          timer = requestAnimationFrame(fn)
-        } else if (_this.node.scrollTop > 0) {
-          _this.node.scrollTop -= 5
-          timer = requestAnimationFrame(fn)
-        } else {
-          cancelAnimationFrame(timer)
-        }
-      })
-      this.$emit('scrollTop')
+    hello() {
+      console.log(123213213213)
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.scroll-top {
-  background: #888;
-  position: fixed;
-  right: 30px;
-  bottom: 30px;
-  width: 30px;
-  height: 30px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: 0.5s opacity;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
-  opacity: 0.2;
-  z-index: 100;
+#scroll {
+  width: 40%;
+  height: 400px;
+  overflow: auto;
 }
 
-.scroll-top:hover {
-  opacity: 0.5;
+.add {
+  right: 50px;
+  bottom: 50px;
 }
 
-.icon-top {
+/deep/.add-top {
   position: absolute;
   left: 5px;
   top: 8px;
@@ -180,6 +56,6 @@ export default {
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 10px solid #fff;
+  border-bottom: 10px solid #eee;
 }
 </style>

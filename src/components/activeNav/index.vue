@@ -2,114 +2,97 @@
  * @Author: Lqf
  * @Date: 2021-11-25 19:18:04
  * @LastEditors: Lqf
- * @LastEditTime: 2021-12-16 18:07:22
+ * @LastEditTime: 2022-01-21 15:08:30
  * @Description: 我添加了修改
 -->
 <template>
-  <div
-    ref="nav"
-    class="activeNav"
+  <active-nav
+    nav-height="50"
+    :nav1="nav1"
+    :nav2="nav2"
   >
     <div
-      ref="nav2"
-      class="nav nav2"
+      slot="index"
+      class="index"
+      style="display: flex; justify-content: center"
     >
-      <slot name="paging" />
+      <div
+        v-for="item in title1"
+        :key="item.id"
+        style="margin: 0 20px; font: 20px/50px '宋体'"
+      >{{ item.content }}</div>
     </div>
     <div
-      ref="nav1"
-      class="nav nav1"
+      slot="paging"
+      class="paging"
+      style="display: flex; justify-content: center"
     >
-      <slot name="index" />
+      <div
+        v-for="item in title2"
+        :key="item.id"
+        style="margin: 0 20px; font: 20px/50px '宋体'"
+      >{{ item.content }}</div>
     </div>
-  </div>
+  </active-nav>
 </template>
 
 <script>
+import ActiveNav from './activeNav'
 export default {
-  name: 'BizActiveNav',
-  props: {
-    navHeight: {
-      type: String,
-      default: ''
-    },
-    nav1: {
-      type: [String, Object],
-      default: ''
-    },
-    nav2: {
-      type: [String, Object],
-      default: ''
-    }
+  components: {
+    ActiveNav
   },
-  mounted() {
-    if (document.addEventListener) {
-      document.addEventListener('DOMMouseScroll', this.scrollFunc, false)
-    }
-    window.onmousewheel = document.onmousewheel = this.scrollFunc
-    if (/^\d{1,}%$/.test(this.navHeight)) {
-      this.$refs.nav.style.height = this.navHeight
-    } else if (/^\d{1,}$/.test(this.navHeight)) {
-      this.$refs.nav.style.height = this.navHeight + 'px'
-    }
-    if (this.nav1) {
-      this.analysisStyle(this.nav1, 'nav1')
-    }
-    if (this.nav2) {
-      this.analysisStyle(this.nav2, 'nav2')
-    }
-  },
-  methods: {
-    scrollFunc(e) {
-      e = e || window.event
-      if (e.wheelDelta < 0) {
-        this.$refs.nav1.style.top = '-100%'
-        this.$refs.nav2.style.top = '0%'
-      } else {
-        this.$refs.nav1.style.top = '0'
-        this.$refs.nav2.style.top = '100%'
-      }
-    },
-    analysisStyle(style, target) {
-      if (typeof style === 'string') {
-        let arr = style.split(';')
-        arr.forEach(item => {
-          if (item) {
-            let tmp = item.split(':')
-            tmp[0] && (this.$refs[target].style[tmp[0].trim()] = tmp[1].trim())
-          }
-        })
-      } else {
-        Object.keys(style).forEach(item => {
-          this.$refs[target].style[item] = style[item]
-        })
+  data() {
+    return {
+      title1: [
+        {
+          id: 1,
+          content: '首页 '
+        },
+        {
+          id: 2,
+          content: '发现 '
+        },
+        {
+          id: 3,
+          content: '会员 '
+        }
+      ],
+      title2: [
+        {
+          id: 1,
+          content: '首页2 '
+        },
+        {
+          id: 2,
+          content: '发现2 '
+        },
+        {
+          id: 3,
+          content: '会员2 '
+        }
+      ],
+      nav1: 'color: #323232; background: rgba(123, 23, 213, 0.1)',
+      nav2: {
+        color: 'grey',
+        background: 'rgba(123, 23, 213, 0.2)'
       }
     }
   }
 }
 </script>
 
-<style scoped>
-.activeNav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 8%;
-  z-index: 2;
-  overflow: hidden;
-  -webkit-font-smoothing: subpixel-antialiased;
+<style lang="less" scoped>
+#cla {
+  width: 50%;
+  height: 400px;
+  overflow: auto;
 }
-.nav {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  transition: all 0.4s;
+
+.index {
+  display: flex;
 }
-.nav2 {
-  top: 100%;
+.paging {
+  display: flex;
 }
 </style>

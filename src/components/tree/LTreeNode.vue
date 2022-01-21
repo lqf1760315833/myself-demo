@@ -2,16 +2,22 @@
  * @Author: Lqf
  * @Date: 2021-09-29 09:51:26
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-29 10:26:29
+ * @LastEditTime: 2022-01-21 15:54:45
  * @Description: 我添加了修改
 -->
 <template>
   <div>
-    <div @click="toggle" :style="{ paddingLeft: level - 1 + 'em' }">
+    <div
+      :style="{ paddingLeft: level - 1 + 'em' }"
+      @click="toggle"
+    >
       <label>{{ model.title }}</label>
       <span v-if="isFolder">{{ open ? '-' : '+' }}</span>
     </div>
-    <div v-show="open" v-if="isFolder">
+    <div
+      v-show="open"
+      v-if="isFolder"
+    >
       <node-tree
         v-for="item in model.children"
         :key="item.title"
@@ -24,31 +30,31 @@
 
 <script>
 export default {
-  name: 'node-tree',
+  name: 'NodeTree',
   props: {
-    model: Object,
+    model: {
+      type: Object,
+      required: true
+    },
     level: {
       type: Number,
       default: 1
     }
   },
-  data () {
+  data() {
     return {
       open: false
     }
   },
   computed: {
-    isFolder () {
+    isFolder() {
       return this.model.children && this.model.children.length > 0
     }
   },
   methods: {
-    toggle () {
+    toggle() {
       this.open = !this.open
     }
-  },
+  }
 }
 </script>
-
-<style lang="less" scoped>
-</style>
