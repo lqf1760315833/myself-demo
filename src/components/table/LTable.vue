@@ -1,13 +1,13 @@
 <!--
  * @Author: Lqf
- * @Date: 2021-10-21 10:20:23
+ * @Date: 2022-01-24 14:47:24
  * @LastEditors: Lqf
- * @LastEditTime: 2022-01-21 14:59:54
+ * @LastEditTime: 2022-01-25 15:57:36
  * @Description: 我添加了修改
 -->
+
 <script>
 export default {
-  name: 'LTable',
   props: {
     data: {
       type: Array,
@@ -17,54 +17,68 @@ export default {
   data() {
     return {
       orderField: '',
-      orderBy: 'desc'
+      orderBy: -1 // -1 递减，1 递增
     }
   },
   computed: {
     columns() {
-      // 可以从内部TableColumn定义之中获取prop和label
-      return this.$slots.default
-        .filter(vnode => vnode.tag) // 去除空格的影响
-        .map(({ data: { attrs, scopedSlots } }) => {
-          const column = { ...attrs }
-          if (scopedSlots) {
-            column.renderCell = (row, index) => <div>{scopedSlots.default({ row, $index: index })}</div>
-          } else {
-            column.renderCell = row => <div>{row[column.prop]}</div>
-          }
-          return column
-        })
+      return (
+        this.$slots.default
+          .filter(vNode => vNode.tag)
+          // 如果内部出现了默认作用域插槽，执行
+          .map(({ data: { attrs, scopedSlots } }) => {
+            const column = { ...attrs }
+            if (scopedSlots) {
+              // 自定义列表模板
+              column.renderCell = (row, i) => {
+                // scopedSlots.default是一个函数，返回的是它的虚拟DOM
+                return <div>{scopedSlots.default({ row, $index: i })}</div>
+              }
+            } else {
+              // 设置了prop的情况
+              column.renderCell = row => <div>{row[column.prop]}</div>
+            }
+            return column
+          })
+      )
     }
+    // rows() {
+    //   return this.data.map(item => {
+    //     const ret = {}
+    //     this.columns.forEach(({ prop }) => {
+    //       ret[prop] = item[prop]
+    //     })
+    //     return ret
+    //   })
+    // }
   },
   created() {
     this.columns.forEach(column => {
-      // 如果存在sortable，第一个作为排序列
       if (Object.prototype.hasOwnProperty.call(column, 'sortable')) {
         if (column.prop && !this.orderField) {
-          this.sort(column.prop, this.orderBy)
+          this.sortTable(column.prop, this.orderBy)
         }
       }
     })
   },
   methods: {
-    sort(field, by) {
+    sortTable(field, by) {
       this.orderField = field
-      this.orderBy = by
-
       this.data.sort((a, b) => {
-        const v1 = a[this.orderField]
-        const v2 = b[this.orderField]
-        if (typeof v1 === 'number') {
-          return this.orderBy === 'desc' ? v2 - v1 : v1 - v2
-        } else {
-          return this.orderBy === 'desc' ? v2.localeCompare(v1) : v1.localeCompare(v2)
-        }
+        return a[field] > b[field] ? by : -by
       })
     },
-    toggleSort(field) {
-      const by = this.orderBy === 'desc' ? 'asc' : 'desc'
-      this.sort(field, by)
-    }
+    changeSort(column) {
+      if (Object.prototype.hasOwnProperty.call(column, 'sortable')) {
+        if (column.prop === this.orderField) {
+          this.orderBy *= -1
+        } else {
+          this.orderBy = -1
+        }
+        this.sortTable(column.prop, this.orderBy)
+      }
+    },
+    deleteColumn() {}
   },
   render() {
     return (
@@ -72,33 +86,40 @@ export default {
         <thead>
           <tr>
             {this.columns.map(column => {
+              let flag = ''
               if (Object.prototype.hasOwnProperty.call(column, 'sortable')) {
-                let orderArrow = '⬆⬇'
+                flag = '↑ ↓'
                 if (this.orderField === column.prop) {
-                  orderArrow = this.orderBy === 'desc' ? '⬇' : '⬆'
+                  flag = this.orderBy > 0 ? '↑' : '↓'
                 }
-                return (
-                  <th key={column.label} onClick={() => this.toggleSort(column.prop)}>
-                    {column.label} <span>{orderArrow}</span>
-                  </th>
-                )
-              } else {
-                return <th key={column.label}>{column.label}</th>
               }
+              return (
+                <th key={column.label} onClick={this.changeSort.bind(this, column)}>
+                  {column.label} {flag}
+                </th>
+              )
             })}
           </tr>
         </thead>
         <tbody>
-          {this.data.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {this.columns.map((column, columnIndex) => (
-                <td td key={columnIndex}>
-                  {' '}
-                  {column.renderCell(row, rowIndex)}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {
+            this.data.map((row, rowIndex) => {
+              return (
+                <tr key={rowIndex}>
+                  {this.columns.map((column, columnIndex) => (
+                    <td key={columnIndex}>{column.renderCell(row, rowIndex)}</td>
+                  ))}
+                </tr>
+              )
+            })
+
+            // this.data.map((row, index) => {
+            //   const tds = Object.keys(row).map(key => {
+            //     return <td key={key}>{row[key]}</td>
+            //   })
+            //   return <tr key={index}>{tds}</tr>
+            // })
+          }
         </tbody>
       </table>
     )
