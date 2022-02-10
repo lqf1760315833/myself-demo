@@ -1,0 +1,54 @@
+<!--
+ * @Author: Lqf
+ * @Date: 2021-09-03 16:31:13
+ * @LastEditors: Lqf
+ * @LastEditTime: 2021-09-16 16:19:18
+ * @Description: 我添加了修改
+-->
+<div id="app">
+  <p>{{counter}}</p>
+  <p l-text="counter"></p>
+  <p l-html="desc"></p>
+  <button @click="count">123123</button>
+  <input type="text" l-model="desc">
+</div>
+<script src="./lvue.js"></script>
+<script>
+  // 1.数据驱动：数据响应式
+  // 2.编译：得到渲染函数
+  const app = new LVue({
+    el: '#app',
+    data: {
+      counter: 1,
+      arr: [1],
+      desc: '<span style="color: red">你好帅</span>'
+    },
+    methods: {
+      count() {
+        this.counter = 0
+        this.arr.push(111)
+      }
+    },
+    render(h) {
+      // dom
+      // const h1 = document.createElement('h1')
+      // h1.textContent = this.counter
+      // return h1
+
+      // vnode
+      // return h('h1', null, this.counter + '')
+      return h('div', { id: 'xxx' }, [
+        h('p', null, '{{counter}}'),
+        h('p', {
+          directives: {
+            'l-text': 'counter'
+          }
+        }, null),
+        h('p', null, this.counter * 3 + '33'),
+      ])
+    }
+  })
+  setInterval(() => {
+    app.counter++
+  }, 1000);
+</script>
