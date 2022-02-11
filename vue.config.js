@@ -1,11 +1,10 @@
 /*
  * @Author: Lqf
- * @Date: 2021-09-18 09:04:53
+ * @Date: 2022-02-11 09:07:38
  * @LastEditors: Lqf
- * @LastEditTime: 2021-09-23 15:16:18
+ * @LastEditTime: 2022-02-11 09:11:07
  * @Description: 我添加了修改
  */
-
 const path = require('path')
 
 const port = 8888
@@ -31,35 +30,35 @@ module.exports = {
       }
     },
     // 本地mock
-    //   before: app => {
-    //     app.use(bodyParser.json())
-    //     console.log(111)
-    //     app.post('/dev-api/user/login', (req, res) => {
-    //       const { username } = req.body
+    // before: app => {
+    //   app.use(bodyParser.json())
+    //   console.log(111)
+    //   app.post('/dev-api/user/login', (req, res) => {
+    //     const { username } = req.body
 
-    //       if (username === "admin" || username === "Lqf") {
-    //         res.json({
-    //           code: 1,
-    //           data: username
-    //         })
-    //       } else {
-    //         res.json({
-    //           code: 10204,
-    //           message: "用户名或密码错误"
-    //         })
-    //       }
-    //     })
-
-    //     app.get("/dev-api/user/info", (req, res) => {
-    //       const auth = req.headers["authorization"]
-    //       const roles = auth.split(' ')[1] === "admin" ? ["admin"] : ["editor"]
+    //     if (username === "admin" || username === "Lqf") {
     //       res.json({
     //         code: 1,
-    //         data: roles
+    //         data: username
     //       })
-    //     })
+    //     } else {
+    //       res.json({
+    //         code: 10204,
+    //         message: "用户名或密码错误"
+    //       })
+    //     }
+    //   })
 
-    //   }
+    //   app.get("/dev-api/user/info", (req, res) => {
+    //     const auth = req.headers["authorization"]
+    //     const roles = auth.split(' ')[1] === "admin" ? ["admin"] : ["editor"]
+    //     res.json({
+    //       code: 1,
+    //       data: roles
+    //     })
+    //   })
+
+    // }
   },
   // configureWebpack: {
   //   name: 'vue杂项',
@@ -77,16 +76,21 @@ module.exports = {
       config.name = 'vue杂项'
     }
   },
+  // 链式webpack
   chainWebpack (config) {
+    // 当前项目有一个加载svg的loader
     config.module.rule('svg')
+      // svg规则排除icon目录
       .exclude.add(resolve('src/icon'))
       .end()
 
     config.module.rule('icon')
+      // 新添加的loader处理icon文件夹，include选项后当前上下文变成一个存放文件的Set，需要end回去
       .include.add(resolve('src/icon')).end()
       .test(/\.svg$/)
       .use('svg-sprite-loader')
       .loader('svg-sprite-loader')
+      // 选项命名
       .options({ symbolId: 'icon-[name]' })
       .end()
   }
