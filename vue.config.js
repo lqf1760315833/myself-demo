@@ -1,8 +1,8 @@
 /*
  * @Author: Lqf
  * @Date: 2022-02-11 09:07:38
- * @LastEditors: Lqf
- * @LastEditTime: 2022-02-11 09:11:07
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-05-05 15:40:45
  * @Description: 我添加了修改
  */
 const path = require('path')
@@ -17,7 +17,7 @@ console.log(process.env.VUE_APP_DONG)
 // const bodyParser = require("body-parser")
 
 module.exports = {
-  publicPath: '/best-practice',
+  publicPath: '/vancats',
   devServer: {
     port,
     proxy: {
@@ -68,7 +68,7 @@ module.exports = {
   //     }
   //   }
   // }
-  configureWebpack (config) {
+  configureWebpack(config) {
     config.resolve.alias.comps = resolve('src/components')
     if (process.env.NODE_ENV === 'development') {
       config.name = 'vue-sundry'
@@ -77,7 +77,7 @@ module.exports = {
     }
   },
   // 链式webpack
-  chainWebpack (config) {
+  chainWebpack(config) {
     // 当前项目有一个加载svg的loader
     config.module.rule('svg')
       // svg规则排除icon目录
